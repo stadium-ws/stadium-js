@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": "../",
     "allowJs": true,
     "esModuleInterop": true,
     "jsx": "react-native",
@@ -12,7 +13,10 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "paths": {
+      "@stadium/stadium-js": ["@stadium/stadium-js"]
+    }
   },
   "exclude": [
     "node_modules",
