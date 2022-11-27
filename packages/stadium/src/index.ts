@@ -1,6 +1,20 @@
-import fetch from 'cross-fetch'
+/**
+ * TODO:
+ *  - Use cross platform websockets i.e. @see https://github.com/heineiuo/isomorphic-ws
+ *  - Add socket authentication (which is required!)
+ *  - createUser
+ *  - addUserToChannel
+ *  - updateChannel
+ *  - onEvent?
+ *  - onChannelEvent?
+ *  - getChannelMessages
+ *  - getChannel
+ *  - createChannelEvent
+ *  - onNotification?
+ *  - registerUserDevice? for push notifications
+ */
 
-// TODO: use cross platform websockets i.e. @see https://github.com/heineiuo/isomorphic-ws
+import fetch from 'cross-fetch'
 
 interface IStadiumConfig {
   apiKey: string
