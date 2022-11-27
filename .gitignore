@@ -4,8 +4,7 @@
 dist
 .webpack
 out
-.expo/
-dist/
+.expo
 npm-debug.*
 *.jks
 *.p8
@@ -13,7 +12,7 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
+web-build
 
 # deps
 node_modules/
