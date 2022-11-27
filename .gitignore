@@ -41,3 +41,4 @@ tsconfig.tsbuildinfo
 .eslintcache
 
 /packages/react-native-chat/.expo/
+/packages/react-native-chat/node_modules/
