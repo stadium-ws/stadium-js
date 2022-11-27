@@ -15,7 +15,7 @@
     "skipLibCheck": true,
     "target": "ESNext",
     "paths": {
-      "@stadium/stadium-js": ["@stadium/stadium-js/src"]
+      "@stadium/stadium-js": ["@stadium/stadium-js/dist"]
     }
   },
   "exclude": [
