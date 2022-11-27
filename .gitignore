@@ -1,0 +1,43 @@
+# builds
+.next
+.swc
+dist
+.webpack
+out
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# deps
+node_modules/
+package-lock.json
+yarn.lock
+!/yarn.lock
+
+# logs
+*.log
+pids
+*.cpuprofile
+
+# editors
+**/.idea
+**/.#*
+.DS_Store
+.env
+.env.test
+.env.development
+.env.production
+.vscode
+
+# cache
+.tsbuildinfo
+tsconfig.tsbuildinfo
+.eslintcache
+
