@@ -16,7 +16,7 @@
     "preserveConstEnums": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "stadium": ["stadium"]
+      "@stadium/stadium-js": ["@stadium/stadium-js"]
     }
   },
   "exclude": [
