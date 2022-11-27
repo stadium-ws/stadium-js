@@ -4,7 +4,7 @@
 dist
 .webpack
 out
-**/.expo
+.expo
 npm-debug.*
 *.jks
 *.p8
@@ -13,7 +13,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build
-
+=
 # deps
 node_modules
 package-lock.json
@@ -40,3 +40,4 @@ pids
 tsconfig.tsbuildinfo
 .eslintcache
 
+/packages/react-native-chat/.expo/
