@@ -1,6 +1,13 @@
 {
   "name": "@stadium/stadium-js",
   "version": "1.0.0",
-  "main": "src/index.ts",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "./dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  }
 }
