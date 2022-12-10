@@ -1,44 +1,23 @@
-# builds
-.next
-.swc
-dist
-.webpack
-out
-.expo
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build
-=
-# deps
+# dependencies
 node_modules
-package-lock.json
-yarn.lock
-!/yarn.lock
 
-# logs
-*.log
-pids
-*.cpuprofile
+# next.js
+.next/
+out/
+build
 
-# editors
-**/.idea
-**/.#*
+# misc
 .DS_Store
+*.pem
+
+# debug
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
 .env
-.env.test
-.env.development
-.env.production
-.vscode
 
-# cache
-.tsbuildinfo
-tsconfig.tsbuildinfo
-.eslintcache
-
-/packages/react-native-chat/.expo/
-/packages/react-native-chat/node_modules/
+# turbo
+.turbo
+.expo
+.idea

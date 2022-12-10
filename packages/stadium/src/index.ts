@@ -1,6 +1,8 @@
 /**
  * TODO:
  *  - Use cross platform websockets i.e. @see https://github.com/heineiuo/isomorphic-ws
+ *  - https://github.com/GetStream/stream-chat-js/blob/master/src/client.ts
+ *
  *  - Add socket authentication (which is required!)
  *  - createUser
  *  - addUserToChannel

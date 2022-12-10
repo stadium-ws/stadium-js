@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 function App () {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stadium, setStadium] = useState(new Stadium({
     appId: 'XXX'
   }))
