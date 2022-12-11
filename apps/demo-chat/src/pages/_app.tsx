@@ -4,6 +4,8 @@ import { ThemeProvider } from 'styled-components'
 import theme from '../theme'
 
 import 'sanitize.css'
+import GlobalStyle from '@/components/GlobalStyle'
+import Layout from '@/components/Layout'
 
 const App = ({
   Component: Page,
@@ -11,7 +13,10 @@ const App = ({
 }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
-      <Page {...pageProps} />
+      <GlobalStyle />
+      <Layout>
+        <Page {...pageProps} />
+      </Layout>
     </ThemeProvider>
   )
 }

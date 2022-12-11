@@ -1,1 +1,1 @@
-export { default } from '../views/Home/Home'
+export { default } from '../views/Register/Register'
