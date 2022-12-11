@@ -5,6 +5,7 @@ import Container from '@/components/Container'
 
 const Component = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, .1);
+  font-size: 0.85rem;
 `
 
 const Content = styled.div`
@@ -21,12 +22,14 @@ const Branding = styled.div``
 const UserInfo = styled.div`
   margin-left: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 `
 
-const DisplayName = styled.div``
+const DisplayName = styled.div`
+  margin-right: .5rem;
+`
 
 const Logout = styled.div`
   font-size: 0.85rem;
