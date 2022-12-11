@@ -21,9 +21,11 @@ import Requester from './Requester'
 // const API_URL = 'https://api.stadium.ws'
 const API_URL = 'http://localhost:4000'
 
+const IS_BROWSER = !!global.window
+
 interface IStadiumConfig {
-  clientId: string
-  clientSecret: string
+  clientId?: string
+  clientSecret?: string
 }
 
 export class Stadium {
@@ -31,7 +33,13 @@ export class Stadium {
   private requester: Requester
   private accessToken?: string
 
-  constructor (config: IStadiumConfig) {
+  constructor (config: IStadiumConfig = {}) {
+    if (IS_BROWSER) {
+      if (config.clientId || config.clientSecret) {
+        throw new Error('Stadium: You cannot pass a clientId or clientSecret when running in the browser, use the setUserToken method instead.')
+      }
+    }
+
     this.config = config
     this.requester = new Requester(API_URL)
   }
@@ -55,6 +63,19 @@ export class Stadium {
         displayName,
         meta
       }
+    })
+  }
+
+  public setUserToken (token: string) {
+    this.accessToken = token
+    this.requester.setTokenHeader(this.accessToken)
+  }
+
+  public async getChannels () {
+    await this.ensureAccessToken()
+
+    return this.requester.request({
+      urlSegment: 'channels'
     })
   }
 

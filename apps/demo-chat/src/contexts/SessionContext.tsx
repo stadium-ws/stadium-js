@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Route } from '@/constants/Route'
+import { register as apiRegister } from '@/api/register'
+import stadium from '@/utils/stadium'
 
 interface User {
   id: string
@@ -11,7 +13,7 @@ interface User {
 interface SessionContext {
   user?: User
   isInitialized: boolean
-  setUser: (user: User) => void
+  register: (displayName: string) => void
   logout: () => Promise<void>
 }
 
@@ -30,6 +32,13 @@ const SessionContextProvider = ({ children }: SessionContextProvider) => {
   const [user, setUser] = useState<User | undefined>()
   const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
+  const register = async (displayName: string) => {
+    const apiRegisterRes = await apiRegister(displayName)
+    setUser(apiRegisterRes.user)
+    stadium.setUserToken(apiRegisterRes.token)
+    await router.push(Route.CHANNELS)
+  }
+
   const logout = async () => {
     setUser(undefined)
     await router.push(Route.HOME)
@@ -38,7 +47,7 @@ const SessionContextProvider = ({ children }: SessionContextProvider) => {
   const sessionContext: SessionContext = {
     user,
     isInitialized,
-    setUser,
+    register,
     logout
   }
 
