@@ -1,5 +1,5 @@
 import type { DocumentContext } from 'next/document'
-import Document, { Html, Main, NextScript } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 class AppDocument extends Document {
@@ -34,6 +34,7 @@ class AppDocument extends Document {
   public render () {
     return (
       <Html lang='en-US'>
+        <Head />
         <body>
           <Main />
           <NextScript />
