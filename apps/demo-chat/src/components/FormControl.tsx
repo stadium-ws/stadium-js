@@ -37,7 +37,7 @@ FormControl.Label = FormControlLabel
 
 const Error = styled.div`
   margin-top: .5rem;
-  color: red;
+  color: ${props => props.theme.colors.error};
 `
 
 interface FormControlErrorMessage {
