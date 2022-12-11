@@ -1,0 +1,31 @@
+{
+  "name": "@stadium/demo-chat",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "next build",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf yarn-error.log && rm -rf .next",
+    "dev": "next dev",
+    "lint": "tsc --pretty --noEmit && TIMING=1 eslint \"src/**/*.ts*\"",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@stadium/core": "*",
+    "next": "^13.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "reselect": "^4.1.7",
+    "sanitize.css": "^13.0.0",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.2",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@types/styled-components": "^5.1.26",
+    "eslint": "^8.29.0",
+    "next-compose-plugins": "^2.2.1",
+    "next-transpile-modules": "^10.0.0",
+    "typescript": "^4.9.4"
+  }
+}

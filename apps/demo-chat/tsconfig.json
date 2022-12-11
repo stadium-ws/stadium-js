@@ -1,0 +1,15 @@
+{
+  "extends": "@stadium/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": [
+    "src",
+    "next-env.d.ts"
+  ]
+}
