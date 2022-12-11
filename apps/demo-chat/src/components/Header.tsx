@@ -31,17 +31,18 @@ const DisplayName = styled.div`
   margin-right: .5rem;
 `
 
-const Logout = styled.div`
+const Logout = styled.a`
   font-size: 0.85rem;
   color: rgba(255, 255, 255, .5);
+  cursor: pointer;
 `
 
 const Header = () => {
   const session = useSession()
   const isLoggedIn = !!session.user
 
-  const handleLogoutClick = () => {
-    session.logout()
+  const handleLogoutClick = async () => {
+    await session.logout()
   }
 
   return (
