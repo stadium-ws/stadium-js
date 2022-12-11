@@ -8,7 +8,6 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'no-console': ['error'],
-    'unused-imports/no-unused-imports': 'warn',
     'comma-dangle': ['error', 'never'],
     quotes: ['error', 'single', { avoidEscape: true }],
     'no-multiple-empty-lines': [

@@ -4,6 +4,9 @@ import Button from '@/components/Button'
 import Input from '@/components/Input'
 import * as Yup from 'yup'
 import { register } from '@/api/register'
+import { useSession } from '@/contexts/SessionContext'
+import { useRouter } from 'next/navigation'
+import { Route } from '@/constants/Route'
 
 const validationSchema = Yup.object().shape({
   displayName: Yup.string().required('Display name is required')
@@ -14,8 +17,13 @@ const initialValues = {
 }
 
 const Register = () => {
+  const session = useSession()
+  const router = useRouter()
+
   const handleSubmit = async (values: typeof initialValues) => {
-    await register(values.displayName)
+    const res = await register(values.displayName)
+    session.setUser(res.user)
+    router.push(Route.CHANNELS)
   }
 
   return (
@@ -27,8 +35,14 @@ const Register = () => {
       {() => {
         return (
           <Form>
-            <Input name='displayName' label='Display name' placeholder='Richard Hendrix' />
-            <Button type='submit'>Register</Button>
+            <Input
+              name='displayName'
+              label='Display name'
+              placeholder='Richard Hendrix'
+            />
+            <Button type='submit'>
+              Join the chat
+            </Button>
           </Form>
         )
       }}

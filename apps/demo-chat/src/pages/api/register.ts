@@ -6,14 +6,14 @@ async function register (req: NextApiRequest, res: NextApiResponse) {
   const { displayName } = req.body
   const newUser = userStore.register(displayName)
 
-  await stadium.createUser({
+  const createUserRes = await stadium.createUser({
     displayName,
     meta: {
       internalUserId: newUser.id
     }
   })
 
-  res.send(newUser)
+  res.send(createUserRes)
 }
 
 export default register
