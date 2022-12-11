@@ -38,6 +38,7 @@ const Button = ({
   return (
     <Component
       variant={variant}
+      type={type}
       {...props}
     >
       <Content>

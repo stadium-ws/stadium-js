@@ -18,7 +18,8 @@
 
 import Requester from './Requester'
 
-const API_URL = 'https://api.stadium.ws'
+// const API_URL = 'https://api.stadium.ws'
+const API_URL = 'http://localhost:4000'
 
 interface IStadiumConfig {
   clientId: string
@@ -46,7 +47,8 @@ export class Stadium {
   }): Promise<any> {
     await this.ensureAccessToken()
 
-    return this.requester.request('/users', {
+    return this.requester.request({
+      urlSegment: 'users',
       method: 'POST',
       body: {
         userRoleId,
@@ -59,7 +61,8 @@ export class Stadium {
   public async addUserToChannel (userId: string, channelId: string): Promise<any> {
     await this.ensureAccessToken()
 
-    return this.requester.request(`/channels/${channelId}/users`, {
+    return this.requester.request({
+      urlSegment: `channels/${channelId}/users`,
       method: 'POST',
       body: {
         id: userId
@@ -72,7 +75,10 @@ export class Stadium {
       return
     }
 
-    this.accessToken = await this.requester.request('/oauth/token', {
+    const accessTokenResponse = await this.requester.request<{
+      access_token: string
+    }>({
+      urlSegment: 'oauth/token',
       method: 'POST',
       body: {
         grant_type: 'client_credentials',
@@ -81,10 +87,11 @@ export class Stadium {
       }
     })
 
-    if (!this.accessToken) {
+    if (!accessTokenResponse?.access_token) {
       throw new Error('Could not authenticate with Stadium')
     }
 
+    this.accessToken = accessTokenResponse.access_token
     this.requester.setTokenHeader(this.accessToken)
   }
 }
