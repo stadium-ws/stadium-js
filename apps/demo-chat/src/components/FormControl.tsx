@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Component = styled.div`
-  margin-bottom: .5rem;
+  margin-bottom: 2rem;
 `
 
 interface FormControl {
@@ -18,8 +18,7 @@ const FormControl = ({ children }: FormControl) => {
 }
 
 const Label = styled.div`
-  margin-bottom: .5rem;
-  color: rgba(0, 0, 0, .5);
+  margin-bottom: 1rem;
 `
 
 interface FormControlLabel {

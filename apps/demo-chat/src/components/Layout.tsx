@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Component = styled.div`
   max-width: 800px;
   margin: 2rem auto;
+  padding: 0 1rem;
 `
 
 interface Layout {

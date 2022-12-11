@@ -6,7 +6,9 @@ import { useField } from 'formik'
 const InnerInput = styled.input`
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, .1);
+  background: transparent;
+  color: inherit;
   border-radius: 4px;
   font-size: 1rem;
   font-family: inherit;
