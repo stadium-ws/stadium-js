@@ -10,12 +10,13 @@ interface SessionContext {
   user?: User
   isInitialized: boolean
   setUser: (user: User) => void
+  logout: () => void
 }
 
 export const SessionContext = createContext<SessionContext | null>(null)
 
-export const useSession = () => {
-  return useContext(SessionContext)
+export const useSession = (): SessionContext => {
+  return useContext(SessionContext) as SessionContext
 }
 
 interface SessionContextProvider {
@@ -26,10 +27,15 @@ const SessionContextProvider = ({ children }: SessionContextProvider) => {
   const [user, setUser] = useState<User | undefined>()
   const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
+  const logout = () => {
+    setUser(undefined)
+  }
+
   const sessionContext: SessionContext = {
     user,
     isInitialized,
-    setUser
+    setUser,
+    logout
   }
 
   return (
