@@ -4,7 +4,7 @@ const DEFAULT_FONT_SIZE = 16
 
 const theme = {
   colors: {
-    primary: '#28DF99',
+    primary: '#110DFF',
     text: '#333333',
     error: '#FF5151',
     info: '#4299e1',
