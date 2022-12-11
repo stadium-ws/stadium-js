@@ -1,8 +1,10 @@
+import { inter } from '@/utils/fonts'
+
 const DEFAULT_FONT_SIZE = 16
 
 const theme = {
   colors: {
-    primary: '#533E85',
+    primary: '#28DF99',
     text: '#333333',
     error: '#FF5151',
     info: '#4299e1',
@@ -13,7 +15,7 @@ const theme = {
     defaultFontSize: DEFAULT_FONT_SIZE,
     defaultLineHeight: Math.round(DEFAULT_FONT_SIZE * 1.6),
     families: {
-      primary: '\'Poppins\', sans-serif'
+      primary: inter.style.fontFamily
     }
   },
   containerWidth: 1140,
