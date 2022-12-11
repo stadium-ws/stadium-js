@@ -16,108 +16,75 @@
  *  - registerUserDevice? for push notifications
  */
 
-import fetch from 'cross-fetch'
+import Requester from './Requester'
+
+const API_URL = 'https://api.stadium.ws'
 
 interface IStadiumConfig {
-  apiKey: string
-}
-
-interface IStadiumHandlers {
-  onConnected?: (socket: WebSocket) => void
-  onDisconnected?: (socket: WebSocket) => void
+  clientId: string
+  clientSecret: string
 }
 
 export class Stadium {
   private readonly config: IStadiumConfig
-  private readonly handlers: IStadiumHandlers
-  private isConnected = false
-  private socketUrl: string
-  private apiUrl: string
-  public socket?: WebSocket
+  private requester: Requester
+  private accessToken?: string
 
-  constructor (config: IStadiumConfig, handlers: IStadiumHandlers) {
+  constructor (config: IStadiumConfig) {
     this.config = config
-    this.handlers = handlers
-
-    // TODO: add env var
-    this.socketUrl = 'ws://localhost:5000'
-    this.apiUrl = 'http://localhost:4000'
+    this.requester = new Requester(API_URL)
   }
 
-  public async connect () {
-    if (this.isConnected) {
+  public async createUser ({
+    userRoleId,
+    displayName,
+    meta
+  }: {
+    userRoleId?: string
+    displayName?: string,
+    meta?: any
+  }): Promise<any> {
+    await this.ensureAccessToken()
+
+    return this.requester.request('/users', {
+      method: 'POST',
+      body: {
+        userRoleId,
+        displayName,
+        meta
+      }
+    })
+  }
+
+  public async addUserToChannel (userId: string, channelId: string): Promise<any> {
+    await this.ensureAccessToken()
+
+    return this.requester.request(`/channels/${channelId}/users`, {
+      method: 'POST',
+      body: {
+        id: userId
+      }
+    })
+  }
+
+  private async ensureAccessToken () {
+    if (this.accessToken) {
       return
     }
 
-    this.socket = new WebSocket(this.socketUrl)
-
-    this.socket.addEventListener('open', () => {
-      this.isConnected = true
-
-      if (this.handlers.onConnected) {
-        this.handlers.onConnected(this.socket!)
-      }
-    })
-
-    this.socket.addEventListener('close', () => {
-      this.isConnected = false
-
-      if (this.handlers.onDisconnected) {
-        this.handlers.onDisconnected(this.socket!)
-      }
-    })
-  }
-
-  public async getAppAccessToken (apiKey: string, apiSecret: string): Promise<{
-    accessToken: string
-    expiresIn: string
-    tokenType: string
-  }> {
-    const url = `${this.apiUrl}/oauth/token`
-
-    const res = await fetch(url, {
+    this.accessToken = await this.requester.request('/oauth/token', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         grant_type: 'client_credentials',
-        client_id: apiKey,
-        client_secret: apiSecret
-      })
-    })
-
-    const data = await res.json() as {
-      access_token: string
-      expires_in: string
-      token_type: string
-    }
-
-    return {
-      accessToken: data.access_token,
-      expiresIn: data.expires_in,
-      tokenType: data.token_type
-    }
-  }
-
-  public async getUserAccessToken (userId: string, appAccessToken: string): Promise<{
-    accessToken: string
-    expiresIn: string
-  }> {
-    const url = `${this.apiUrl}/users/${userId}/auth`
-
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${appAccessToken}`
+        client_id: this.config.clientId,
+        client_secret: this.config.clientSecret
       }
     })
 
-    const data = await res.json() as {
-      token: string
-      expiresIn: string
+    if (!this.accessToken) {
+      throw new Error('Could not authenticate with Stadium')
     }
 
-    return {
-      accessToken: data.token,
-      expiresIn: data.expiresIn
-    }
+    this.requester.setTokenHeader(this.accessToken)
   }
 }

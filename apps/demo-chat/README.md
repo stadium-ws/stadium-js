@@ -1,13 +1,6 @@
-# `@stadium/web`
+# `@stadium/demo-chat`
 
-## Getting started
+### TODO
 
-```
-cp .env.example .env
-```
-
-## Running development
-
-```
-yarn dev
-```
+- [ ] Create a simple register, in memory db, API
+- [ ] Create the following pages: register -> channels -> channel
