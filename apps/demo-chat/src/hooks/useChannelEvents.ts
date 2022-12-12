@@ -38,6 +38,9 @@ const useChannelEvents = ({
           error: undefined
         }))
 
+        // TODO: this does not belong here...
+        await stadium.connect()
+
         const res = await stadium.getChannelEvents(channelId, {
           cursor,
           limit,

@@ -16,6 +16,7 @@
  *  - registerUserDevice? for push notifications
  */
 
+import Connection from './Connection'
 import Requester from './Requester'
 import type { Channel, ReplyGetChannels, User, ReplyGetChannelUsers, Event , CreateEvent, QueryGetChannelEvents , ReplyGetChannelEvents } from './types'
 
@@ -33,6 +34,7 @@ export class Stadium {
   private readonly config: IStadiumConfig
   private requester: Requester
   private accessToken?: string
+  private connection?: Connection
 
   constructor (config: IStadiumConfig = {}) {
     if (IS_BROWSER) {
@@ -155,5 +157,17 @@ export class Stadium {
 
     this.accessToken = accessTokenResponse.access_token
     this.requester.setTokenHeader(this.accessToken)
+  }
+
+  public async connect () {
+    this.connection = new Connection()
+
+    await this.connection.connect({
+      token: this.accessToken!,
+      onEvent: (event) => {
+        // eslint-disable-next-line no-console
+        console.log('onEvent', event)
+      }
+    })
   }
 }
