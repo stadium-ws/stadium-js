@@ -26,12 +26,21 @@ const Header = styled.div`
   border: 1px solid rgba(255, 255, 255, .1);
 `
 
-const Footer = styled.div``
-const EventsContainer = styled.div`
+const Footer = styled.div`
+  margin-top: auto;
 `
+
+const EventsContainer = styled.div`
+  height: 100%;
+`
+
 const ChannelName = styled.div``
 const UsersContainer = styled.div`
   margin-left: auto;
+`
+
+const Inner = styled.div`
+  overflow: hidden;
 `
 
 const ChannelInner = () => {
@@ -53,12 +62,14 @@ const ChannelInner = () => {
             {channel.name}
           </ChannelName>
         </Header>
-        <EventsContainer>
-          <ChannelEvents channelId={channel.id} />
-        </EventsContainer>
-        <Footer>
-          <CreateMessage />
-        </Footer>
+        <Inner>
+          <EventsContainer>
+            <ChannelEvents channelId={channel.id} />
+          </EventsContainer>
+          <Footer>
+            <CreateMessage channelId={channel.id} />
+          </Footer>
+        </Inner>
       </Content>
       <UsersContainer>
         <ChannelUsers channelId={channel.id} />

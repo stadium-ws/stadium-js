@@ -17,7 +17,7 @@
  */
 
 import Requester from './Requester'
-import type { Channel, ReplyGetChannels, User , ReplyGetChannelUsers } from './types'
+import type { Channel, ReplyGetChannels, User, ReplyGetChannelUsers, Event , CreateEvent, QueryGetChannelEvents , ReplyGetChannelEvents } from './types'
 
 // const API_URL = 'https://api.stadium.ws'
 const API_URL = 'http://localhost:4000'
@@ -46,10 +46,10 @@ export class Stadium {
   }
 
   public async createUser ({
-                             userRoleId,
-                             displayName,
-                             meta
-                           }: {
+    userRoleId,
+    displayName,
+    meta
+  }: {
     userRoleId?: string
     displayName?: string,
     meta?: any
@@ -103,6 +103,32 @@ export class Stadium {
 
     return this.requester.request({
       urlSegment: `channels/${channelId}/users`
+    })
+  }
+
+  public async createEvent (options: CreateEvent): Promise<Event> {
+    await this.ensureAccessToken()
+
+    return this.requester.request({
+      urlSegment: 'events',
+      method: 'POST',
+      body: options
+    })
+  }
+
+  public async getChannelEvents (channelId: string, options: QueryGetChannelEvents): Promise<ReplyGetChannelEvents> {
+    await this.ensureAccessToken()
+
+    const query: QueryGetChannelEvents = {
+      cursor: options.cursor,
+      limit: options.limit,
+      sort: options.sort,
+      type: options.type
+    }
+
+    return this.requester.request({
+      urlSegment: `channels/${channelId}/events`,
+      query: query
     })
   }
 

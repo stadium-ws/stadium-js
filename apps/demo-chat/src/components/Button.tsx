@@ -14,7 +14,7 @@ const Component = styled.button<{
   border: none;
   border-radius: 4px;
   padding: .5rem;
-  font-size: 1rem;
+  font-size: .85rem;
   font-weight: 500;
   cursor: pointer;
   color: #fff;

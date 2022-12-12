@@ -1,8 +1,13 @@
-export type IApiRequestConfig<Body> = {
+import qs from 'qs'
+
+export type ApiRequestConfig<Body> = {
   urlSegment: string
   method?: string
   options?: any
   body?: Body
+  query?: {
+    [key: string]: any
+  }
 }
 
 export type DefaultHeaders = {
@@ -45,8 +50,12 @@ class Requester {
     delete this.headers['Authorization']
   }
 
-  public request = async <Reply, Body = {}> (options: IApiRequestConfig<Body>): Promise<Reply> => {
-    const url = `${this.baseUrl}/${options.urlSegment}`
+  public request = async <Reply, Body = {}> (options: ApiRequestConfig<Body>): Promise<Reply> => {
+    let url = `${this.baseUrl}/${options.urlSegment}`
+
+    if (options.query) {
+      url += `?${qs.stringify(options.query)}`
+    }
 
     const method = options?.method || 'GET'
 
