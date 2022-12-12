@@ -98,18 +98,6 @@ export class Stadium {
     })
   }
 
-  public async addUserToChannel (userId: string, channelId: string): Promise<any> {
-    await this.ensureAccessToken()
-
-    return this.requester.request({
-      urlSegment: `channels/${channelId}/users`,
-      method: 'POST',
-      body: {
-        id: userId
-      }
-    })
-  }
-
   private async ensureAccessToken () {
     if (this.accessToken) {
       return
