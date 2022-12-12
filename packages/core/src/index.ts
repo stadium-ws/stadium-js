@@ -127,10 +127,14 @@ export class Stadium {
     this.requester.setTokenHeader(this.accessToken)
   }
 
-  public getMe (): Promise<User> {
-    return this.requester.request({
-      urlSegment: 'users/me'
+  public async getMe (): Promise<User> {
+    const res = await this.requester.request<{
+      user: User
+    }>({
+      urlSegment: 'oauth/token'
     })
+
+    return res.user
   }
 
   public async getChannels (): Promise<ReplyGetChannels> {
@@ -138,6 +142,14 @@ export class Stadium {
 
     return this.requester.request({
       urlSegment: 'channels'
+    })
+  }
+
+  public async getChannel (channelId: string): Promise<Channel> {
+    await this.ensureAccessToken()
+
+    return this.requester.request({
+      urlSegment: `channels/${channelId}`
     })
   }
 
