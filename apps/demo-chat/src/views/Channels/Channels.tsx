@@ -3,17 +3,34 @@ import styled from 'styled-components'
 import useChannels from '@/hooks/useChannels'
 import Guard from '@/components/Guard'
 import Loader from '@/components/Loader'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const Component = styled.div``
+
+const ChannelName = styled.div`
+  color: rgba(255, 255, 255, .5);
+`
 
 const Channel = styled.div`
   padding: 1rem;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, .1);
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &:hover {
+    ${ChannelName} {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
 `
 
-const ChannelName = styled.div``
+const ChannelControls = styled.div`
+  opacity: .25;
+`
 
 const ChannelsInner = () => {
   const { loading, channels } = useChannels()
@@ -40,6 +57,9 @@ const ChannelsInner = () => {
             <ChannelName>
               {channel.name}
             </ChannelName>
+            <ChannelControls>
+              <ChevronRightIcon width={24} />
+            </ChannelControls>
           </Channel>
         )
       })}
