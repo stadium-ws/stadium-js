@@ -18,6 +18,7 @@ const theme = {
       primary: inter.style.fontFamily
     }
   },
+  headerHeight: 80,
   containerWidth: 1140,
   narrowFormWidth: 420,
   mobilePadding: 10,

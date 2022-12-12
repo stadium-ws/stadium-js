@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 const Component = styled.div`
   max-width: ${props => props.theme.containerWidth}px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: 0 auto;
+  height: 100%;
 `
 
 interface Container {

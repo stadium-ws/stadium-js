@@ -6,7 +6,6 @@ import theme from '../theme'
 import 'sanitize.css'
 import GlobalStyle from '@/components/GlobalStyle'
 import Layout from '@/components/Layout'
-import { inter } from '@/utils/fonts'
 import SessionContextProvider from '@/contexts/SessionContext'
 
 const App = ({
@@ -14,16 +13,14 @@ const App = ({
   pageProps
 }: AppProps) => {
   return (
-    <main className={inter.className}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <SessionContextProvider>
-          <Layout>
-            <Page {...pageProps} />
-          </Layout>
-        </SessionContextProvider>
-      </ThemeProvider>
-    </main>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <SessionContextProvider>
+        <Layout>
+          <Page {...pageProps} />
+        </Layout>
+      </SessionContextProvider>
+    </ThemeProvider>
   )
 }
 
