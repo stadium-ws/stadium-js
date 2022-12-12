@@ -53,3 +53,8 @@ export interface ReplyGetChannels {
   channels: Channel[]
   meta: PagePagination
 }
+
+export interface ReplyGetChannelUsers {
+  users: ChannelUser[]
+  meta: PagePagination
+}

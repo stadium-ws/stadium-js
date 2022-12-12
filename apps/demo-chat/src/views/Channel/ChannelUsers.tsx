@@ -1,15 +1,40 @@
 import React from 'react'
 import styled from 'styled-components'
+import useChannelUsers from '@/hooks/useChannelUsers'
+import Loader from '@/components/Loader'
 
-const Component = styled.div``
-const Header = styled.div``
+const Component = styled.div`
+`
+
+const Header = styled.div`
+  padding: .5rem;
+`
+
 const Title = styled.div``
+
+const Users = styled.div``
+
+const User = styled.div`
+  padding: .5rem;
+  font-size: .85rem;
+  opacity: .5;
+`
+
+const UserName = styled.div``
 
 interface ChannelUsers {
   channelId: string
 }
 
 const ChannelUsers = ({ channelId }: ChannelUsers) => {
+  const { loading, users } = useChannelUsers(channelId)
+
+  if (loading || !users) {
+    return (
+      <Loader />
+    )
+  }
+
   return (
     <Component>
       <Header>
@@ -17,6 +42,17 @@ const ChannelUsers = ({ channelId }: ChannelUsers) => {
           Members
         </Title>
       </Header>
+      <Users>
+        {users.map(user => {
+          return (
+            <User key={user.id}>
+              <UserName>
+                {user.displayName}
+              </UserName>
+            </User>
+          )
+        })}
+      </Users>
     </Component>
   )
 }
