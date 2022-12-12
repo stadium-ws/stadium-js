@@ -16,6 +16,26 @@
  *  - registerUserDevice? for push notifications
  */
 
+interface UserRole {
+  id: string
+  name: string
+  description: string
+  permissions: string[]
+  createdAt: string
+  updatedAt: string
+  meta: any
+}
+
+interface ReplyMe {
+  id: string
+  displayName?: string
+  userRole: UserRole
+  userRoleId: string
+  createdAt: string
+  updatedAt: string
+  meta: any
+}
+
 import Requester from './Requester'
 
 // const API_URL = 'https://api.stadium.ws'
@@ -69,6 +89,12 @@ export class Stadium {
   public setUserToken (token: string) {
     this.accessToken = token
     this.requester.setTokenHeader(this.accessToken)
+  }
+
+  public getMe (): Promise<ReplyMe> {
+    return this.requester.request({
+      urlSegment: 'users/me'
+    })
   }
 
   public async getChannels () {

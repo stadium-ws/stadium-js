@@ -1,8 +1,10 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Route } from '@/constants/Route'
 import { register as apiRegister } from '@/api/register'
 import stadium from '@/utils/stadium'
+import LoadingSplash from '@/components/LoadingSplash'
+import { clearToken, getToken, setToken } from '@/utils/tokenStore'
 
 interface User {
   id: string
@@ -32,15 +34,41 @@ const SessionContextProvider = ({ children }: SessionContextProvider) => {
   const [user, setUser] = useState<User | undefined>()
   const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
+  useEffect(() => {
+    (async () => {
+      const token = getToken()
+
+      if (!token) {
+        setIsInitialized(true)
+        return
+      }
+
+      stadium.setUserToken(token)
+
+      const me = await stadium.getMe()
+
+      setUser({
+        id: me.id,
+        displayName: me.displayName!,
+        createdAt: me.createdAt
+      })
+
+      setIsInitialized(true)
+    })()
+  }, [])
+
   const register = async (displayName: string) => {
-    const apiRegisterRes = await apiRegister(displayName)
-    setUser(apiRegisterRes.user)
-    stadium.setUserToken(apiRegisterRes.token)
+    const { user, auth } = await apiRegister(displayName)
+
+    setUser(user)
+    setToken(auth.token)
+    stadium.setUserToken(auth.token)
     await router.push(Route.CHANNELS)
   }
 
   const logout = async () => {
     setUser(undefined)
+    clearToken()
     await router.push(Route.HOME)
   }
 
@@ -49,6 +77,12 @@ const SessionContextProvider = ({ children }: SessionContextProvider) => {
     isInitialized,
     register,
     logout
+  }
+
+  if (!isInitialized) {
+    return (
+      <LoadingSplash />
+    )
   }
 
   return (
