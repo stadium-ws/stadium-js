@@ -4,6 +4,7 @@ import useChannels from '@/hooks/useChannels'
 import Guard from '@/components/Guard'
 import Loader from '@/components/Loader'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link'
 
 const Component = styled.div``
 
@@ -11,7 +12,7 @@ const ChannelName = styled.div`
   color: rgba(255, 255, 255, .5);
 `
 
-const Channel = styled.div`
+const Channel = styled(Link)`
   padding: 1rem;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, .1);
@@ -20,6 +21,8 @@ const Channel = styled.div`
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 
   &:hover {
     ${ChannelName} {
@@ -53,7 +56,10 @@ const ChannelsInner = () => {
     <Component>
       {channels.map(channel => {
         return (
-          <Channel key={channel.id}>
+          <Channel
+            href={`/channels/${channel.id}`}
+            key={channel.id}
+          >
             <ChannelName>
               {channel.name}
             </ChannelName>
