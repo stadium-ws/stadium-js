@@ -15,10 +15,20 @@ const Component = styled.div`
   height: calc(100vh - ${({ theme }) => theme.headerHeight + (CONTENT_PADDING)}px);
 `
 
-const Content = styled.div``
-const Header = styled.div``
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const Header = styled.div`
+  padding: .5rem;
+  border: 1px solid rgba(255, 255, 255, .1);
+`
+
 const Footer = styled.div``
-const EventsContainer = styled.div``
+const EventsContainer = styled.div`
+`
 const ChannelName = styled.div``
 const UsersContainer = styled.div`
   margin-left: auto;

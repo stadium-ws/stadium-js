@@ -4,19 +4,24 @@ import useChannelUsers from '@/hooks/useChannelUsers'
 import Loader from '@/components/Loader'
 
 const Component = styled.div`
+  width: 200px;
+  margin-left: 1rem;
+  border: 1px solid rgba(255, 255, 255, .1);
 `
 
 const Header = styled.div`
   padding: .5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
 `
 
 const Title = styled.div``
 
-const Users = styled.div``
+const Users = styled.div`
+`
 
 const User = styled.div`
-  padding: .5rem;
   font-size: .85rem;
+  padding: .5rem;
   opacity: .5;
 `
 
