@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TailSpin } from 'react-loader-spinner'
+import Loader from '@/components/Loader'
 
 const Component = styled.div`
   width: 100vw;
@@ -10,17 +10,10 @@ const Component = styled.div`
   justify-content: center;
 `
 
-const SIZE = 32
-
 const LoadingSplash = () => {
   return (
     <Component>
-      <TailSpin
-        height={SIZE}
-        width={SIZE}
-        color='#fff'
-        visible
-      />
+      <Loader size={32} />
     </Component>
   )
 }

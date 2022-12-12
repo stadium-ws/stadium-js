@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import stadium from '@/utils/stadium'
+import { Channel } from '@stadium/core'
 
 interface UseChannelsState {
   loading: boolean
-  data: any
+  channels?: Channel[]
   error: any
 }
 
 const useChannels = () => {
   const [state, setState] = useState<UseChannelsState>({
     loading: false,
-    data: undefined,
+    channels: undefined,
     error: undefined
   })
 
@@ -23,12 +24,12 @@ const useChannels = () => {
           error: undefined
         }))
 
-        const channels = await stadium.getChannels()
+        const res = await stadium.getChannels()
 
         setState(prevState => ({
           ...prevState,
           loading: false,
-          data: channels
+          channels: res.channels
         }))
       } catch (e) {
         setState(prevState => ({
@@ -42,7 +43,7 @@ const useChannels = () => {
 
   return {
     loading: state.loading,
-    data: state.data,
+    channels: state.channels,
     error: state.error
   }
 }
