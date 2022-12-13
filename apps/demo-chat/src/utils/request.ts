@@ -1,5 +1,5 @@
 import Requester from '@stadium/core/src/Requester'
 
-const requester = new Requester('http://localhost:3000/api')
+const requester = new Requester('api')
 
 export default requester.request
