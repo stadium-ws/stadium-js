@@ -1,7 +1,6 @@
 import WebSocket from 'isomorphic-ws'
 
-// const GATEWAY_URL = 'wss://gateway.stadium.ws'
-const GATEWAY_URL = 'ws://localhost:5000'
+const GATEWAY_URL = 'wss://gateway.stadium.ws'
 
 interface Connect {
   onEvent: (event: SocketMessage) => void

@@ -35,8 +35,7 @@ import type {
 import type { EventName } from './utils'
 import { getEventName } from './utils'
 
-// const API_URL = 'https://api.stadium.ws'
-const API_URL = 'http://localhost:4000'
+const API_URL = 'https://api.stadium.ws'
 
 const IS_BROWSER = !!global.window
 
