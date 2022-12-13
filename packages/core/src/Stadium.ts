@@ -16,8 +16,10 @@
  *  - registerUserDevice? for push notifications
  */
 
+import EventEmitter from 'eventemitter3'
+
 import type { SocketMessage } from './Connection'
-import Connection, { MessageType } from './Connection'
+import Connection from './Connection'
 import Requester from './Requester'
 import type {
   Channel,
@@ -30,6 +32,8 @@ import type {
   ReplyGetChannelEvents,
   UpdateUser
 } from './types'
+import type { EventName } from './utils'
+import { getEventName } from './utils'
 
 // const API_URL = 'https://api.stadium.ws'
 const API_URL = 'http://localhost:4000'
@@ -46,6 +50,7 @@ export class Stadium {
   private requester: Requester
   private accessToken?: string
   private connection?: Connection
+  private emitter?: EventEmitter
 
   constructor (config: IStadiumConfig = {}) {
     if (IS_BROWSER) {
@@ -56,6 +61,38 @@ export class Stadium {
 
     this.config = config
     this.requester = new Requester(API_URL)
+  }
+
+  public on (event: EventName, listener: (...args: any[]) => void) {
+    if (!this.emitter) {
+      this.emitter = new EventEmitter()
+    }
+
+    this.emitter.on(event, listener)
+  }
+
+  public once (event: EventName, listener: (...args: any[]) => void) {
+    if (!this.emitter) {
+      this.emitter = new EventEmitter()
+    }
+
+    this.emitter.once(event, listener)
+  }
+
+  public off (event: EventName, listener: (...args: any[]) => void) {
+    if (!this.emitter) {
+      return
+    }
+
+    this.emitter.off(event, listener)
+  }
+
+  public removeAllListeners () {
+    if (!this.emitter) {
+      return
+    }
+
+    this.emitter.removeAllListeners()
   }
 
   public async createUser ({
@@ -199,19 +236,14 @@ export class Stadium {
   }
 
   private onEvent = (event: SocketMessage) => {
-    switch (event.type) {
-      case MessageType.EVENT_CREATE:
-      case MessageType.EVENT_DELETE:
-      case MessageType.EVENT_UPDATE:
-      case MessageType.EVENT_REACTION_CREATE:
-      case MessageType.EVENT_REACTION_DELETE:
-      case MessageType.CHANNEL_UPDATE:
-      case MessageType.CHANNEL_USER_ADDED:
-    }
+    const eventName = getEventName(event.type)
+
+    this.emitter?.emit(eventName, event.data)
   }
 
   public async connect () {
     this.connection = new Connection()
+    this.emitter = new EventEmitter()
 
     await this.connection.connect({
       token: this.accessToken!,
@@ -223,6 +255,8 @@ export class Stadium {
     if (!this.connection) {
       return
     }
+
+    this.emitter?.removeAllListeners()
 
     return this.connection.disconnect()
   }

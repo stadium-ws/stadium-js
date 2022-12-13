@@ -5,7 +5,7 @@ import { useSession } from '@/contexts/SessionContext'
 
 interface UseChannelEventsState {
   loading: boolean
-  events?: Event[]
+  events: Event[]
   error: any
   nextCursor?: string
 }
@@ -26,7 +26,7 @@ const useChannelEvents = ({
   const { user } = useSession()
   const [state, setState] = useState<UseChannelEventsState>({
     loading: false,
-    events: undefined,
+    events: [],
     error: undefined,
     nextCursor: undefined
   })
@@ -42,6 +42,21 @@ const useChannelEvents = ({
 
         // TODO: this does not belong here...
         await stadium.connect()
+
+        stadium.on('eventCreate', (data) => {
+          const newEvent = data.event as Event
+
+          setState(prevState => {
+            return {
+              ...prevState,
+              events: [
+                ...prevState.events,
+                newEvent
+              ]
+            }
+          })
+        })
+
         await stadium.updateUser(user!.id, {
           isOnline: true
         })
