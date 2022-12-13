@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import stadium from '@/utils/stadium'
 import { Event } from '@stadium/core'
+import { useSession } from '@/contexts/SessionContext'
 
 interface UseChannelEventsState {
   loading: boolean
@@ -22,6 +23,7 @@ const useChannelEvents = ({
   cursor,
   type
 }: UseChannelEvents) => {
+  const { user } = useSession()
   const [state, setState] = useState<UseChannelEventsState>({
     loading: false,
     events: undefined,
@@ -40,6 +42,9 @@ const useChannelEvents = ({
 
         // TODO: this does not belong here...
         await stadium.connect()
+        await stadium.updateUser(user!.id, {
+          isOnline: true
+        })
 
         const res = await stadium.getChannelEvents(channelId, {
           cursor,

@@ -16,9 +16,20 @@
  *  - registerUserDevice? for push notifications
  */
 
-import Connection from './Connection'
+import type { SocketMessage } from './Connection'
+import Connection, { MessageType } from './Connection'
 import Requester from './Requester'
-import type { Channel, ReplyGetChannels, User, ReplyGetChannelUsers, Event , CreateEvent, QueryGetChannelEvents , ReplyGetChannelEvents } from './types'
+import type {
+  Channel,
+  ReplyGetChannels,
+  User,
+  ReplyGetChannelUsers,
+  Event,
+  CreateEvent,
+  QueryGetChannelEvents,
+  ReplyGetChannelEvents,
+  UpdateUser
+} from './types'
 
 // const API_URL = 'https://api.stadium.ws'
 const API_URL = 'http://localhost:4000'
@@ -159,15 +170,60 @@ export class Stadium {
     this.requester.setTokenHeader(this.accessToken)
   }
 
+  public updateUser = async (userId: string, options: UpdateUser): Promise<User> => {
+    await this.ensureAccessToken()
+
+    const body: any = {}
+
+    if (options.displayName) {
+      body.displayName = options.displayName
+    }
+
+    if (options.isOnline) {
+      body.isOnline = options.isOnline
+    }
+
+    if (options.meta) {
+      body.meta = options.meta
+    }
+
+    if (options.userRoleId) {
+      body.userRoleId = options.userRoleId
+    }
+
+    return this.requester.request({
+      urlSegment: `users/${userId}`,
+      method: 'PUT',
+      body
+    })
+  }
+
+  private onEvent = (event: SocketMessage) => {
+    switch (event.type) {
+      case MessageType.EVENT_CREATE:
+      case MessageType.EVENT_DELETE:
+      case MessageType.EVENT_UPDATE:
+      case MessageType.EVENT_REACTION_CREATE:
+      case MessageType.EVENT_REACTION_DELETE:
+      case MessageType.CHANNEL_UPDATE:
+      case MessageType.CHANNEL_USER_ADDED:
+    }
+  }
+
   public async connect () {
     this.connection = new Connection()
 
     await this.connection.connect({
       token: this.accessToken!,
-      onEvent: (event) => {
-        // eslint-disable-next-line no-console
-        console.log('onEvent', event)
-      }
+      onEvent: this.onEvent
     })
+  }
+
+  public async disconnect () {
+    if (!this.connection) {
+      return
+    }
+
+    return this.connection.disconnect()
   }
 }
