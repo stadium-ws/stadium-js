@@ -54,6 +54,15 @@ class Connection {
       })
     })
   }
+
+  public disconnect = async (): Promise<void> => {
+    if (!this.isConnected) {
+      return
+    }
+
+    // TODO: perhaps add more params, as they are supported...
+    this.webSocket.close()
+  }
 }
 
 export default Connection
