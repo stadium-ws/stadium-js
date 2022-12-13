@@ -127,3 +127,13 @@ export interface CreateEvent {
   meta?: any
   attachments?: EventAttachment[]
 }
+
+export interface UpdateUser {
+  displayName?: string
+  /**
+   * The id of the user role, a user can't update his own user role.
+   */
+  userRoleId?: string
+  isOnline?: boolean
+  meta?: any
+}
