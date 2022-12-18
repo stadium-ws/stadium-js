@@ -109,6 +109,16 @@ export interface ReplyGetChannelEvents {
   cursor: string
 }
 
+export interface ReplyGetUserRoles {
+  userRoles: UserRole[]
+  meta: PagePagination
+}
+
+export interface ReplyGetUsers {
+  users: User[]
+  meta: PagePagination
+}
+
 export interface ReplyGetChannels {
   channels: Channel[]
   meta: PagePagination

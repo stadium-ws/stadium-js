@@ -28,6 +28,7 @@ import type {
   QueryGetChannelEvents,
   ReplyGetChannelEvents,
   UpdateUser
+  , ReplyGetUserRoles, ReplyGetUsers
 } from './types'
 import type { EventName } from './utils'
 import { getEventName } from './utils'
@@ -179,6 +180,22 @@ export class Stadium {
     return this.requester.request({
       urlSegment: `channels/${channelId}/events`,
       query: query
+    })
+  }
+
+  public async getUserRoles (): Promise<ReplyGetUserRoles> {
+    await this.ensureAccessToken()
+
+    return this.requester.request({
+      urlSegment: 'user-roles'
+    })
+  }
+
+  public async getUsers (): Promise<ReplyGetUsers> {
+    await this.ensureAccessToken()
+
+    return this.requester.request({
+      urlSegment: 'users'
     })
   }
 
