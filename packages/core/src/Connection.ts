@@ -1,6 +1,8 @@
 import WebSocket from 'isomorphic-ws'
 
-const GATEWAY_URL = 'wss://gateway.stadium.ws'
+interface ConnectionConfig {
+  baseUrl: string
+}
 
 interface Connect {
   onEvent: (event: SocketMessage) => void
@@ -23,12 +25,17 @@ export interface SocketMessage {
 }
 
 class Connection {
+  private baseUrl: string
   private webSocket: WebSocket
   private isConnected: boolean = false
 
+  constructor (config: ConnectionConfig) {
+    this.baseUrl = config.baseUrl
+  }
+
   public connect = ({ onEvent, token }: Connect): Promise<void> => {
     return new Promise((resolve, reject) => {
-      this.webSocket = new WebSocket(`${GATEWAY_URL}?token=${token}`)
+      this.webSocket = new WebSocket(`${this.baseUrl}?token=${token}`)
 
       this.webSocket.addEventListener('error', () => {
         reject(new Error('nope'))

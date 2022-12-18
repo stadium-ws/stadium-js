@@ -1,8 +1,5 @@
 /**
  * TODO:
- *  - Use cross platform websockets i.e. @see https://github.com/heineiuo/isomorphic-ws
- *  - https://github.com/GetStream/stream-chat-js/blob/master/src/client.ts
- *
  *  - Add socket authentication (which is required!)
  *  - createUser
  *  - addUserToChannel
@@ -35,16 +32,18 @@ import type {
 import type { EventName } from './utils'
 import { getEventName } from './utils'
 
-const API_URL = 'https://api.stadium.ws'
-
 const IS_BROWSER = !!global.window
 
 interface IStadiumConfig {
   clientId?: string
   clientSecret?: string
+  apiUrl?: string
+  gatewayUrl?: string
 }
 
 export class Stadium {
+  private apiUrl: string
+  private gatewayUrl: string
   private readonly config: IStadiumConfig
   private requester: Requester
   private accessToken?: string
@@ -58,8 +57,10 @@ export class Stadium {
       }
     }
 
+    this.apiUrl = config.apiUrl || 'https://api.stadium.ws'
+    this.gatewayUrl = config.gatewayUrl || 'wss://gateway.stadium.ws'
     this.config = config
-    this.requester = new Requester(API_URL)
+    this.requester = new Requester(this.apiUrl)
   }
 
   public on (event: EventName, listener: (...args: any[]) => void) {
@@ -241,7 +242,10 @@ export class Stadium {
   }
 
   public async connect () {
-    this.connection = new Connection()
+    this.connection = new Connection({
+      baseUrl: this.gatewayUrl
+    })
+
     this.emitter = new EventEmitter()
 
     await this.connection.connect({
