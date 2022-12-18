@@ -52,9 +52,12 @@ export class Stadium {
   private emitter?: EventEmitter
 
   constructor (config: IStadiumConfig = {}) {
-    if (IS_BROWSER) {
-      if (config.clientId || config.clientSecret) {
-        throw new Error('Stadium: You cannot pass a clientId or clientSecret when running in the browser, use the setUserToken method instead.')
+    if (process.env.NODE_ENV === 'development') {
+      if (IS_BROWSER) {
+        if (config.clientId || config.clientSecret) {
+          // eslint-disable-next-line no-console
+          console.warn('Stadium: You are using the browser version of Stadium. You don\'t need to provide a clientId or clientSecret.')
+        }
       }
     }
 
