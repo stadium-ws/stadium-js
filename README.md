@@ -1,1 +1,1 @@
-# `@stadium/js`
+# `@stadium-ws/js`

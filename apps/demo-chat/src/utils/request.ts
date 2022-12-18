@@ -1,4 +1,4 @@
-import Requester from '@stadium/core/src/Requester'
+import Requester from '@stadium-ws/core/src/Requester'
 
 const requester = new Requester('api')
 

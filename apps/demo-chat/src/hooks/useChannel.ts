@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import stadium from '@/utils/stadium'
-import { Channel } from '@stadium/core'
+import { Channel } from '@stadium-ws/core'
 
 interface UseChannelState {
   loading: boolean

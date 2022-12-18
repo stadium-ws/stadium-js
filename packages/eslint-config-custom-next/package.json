@@ -1,5 +1,5 @@
 {
-  "name": "@stadium/eslint-config-custom-next",
+  "name": "@stadium-ws/eslint-config-custom-next",
   "version": "0.0.0",
   "private": true,
   "license": "UNLICENSED",

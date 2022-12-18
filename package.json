@@ -1,5 +1,5 @@
 {
-  "name": "stadium",
+  "name": "stadium-ws",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -12,6 +12,8 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "lint-staged": "lint-staged",
+    "build:core": "yarn --cwd ./packages/core build",
+    "publish:core": "yarn build:core && yarn --cwd ./packages/core publish --access=public",
     "ncu": "npx ncu -u && npm exec --workspaces -- npx ncu -u",
     "ncu:check": "npx ncu && npm exec --workspaces -- npx ncu",
     "packages:sort": "npx sort-package-json \"package.json\" \"packages/*/package.json\" \"apps/*/package.json\""

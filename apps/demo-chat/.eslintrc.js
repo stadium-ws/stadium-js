@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ["@stadium/custom-next"],
+  extends: ['@stadium-ws/custom-next'],
   parserOptions: {
     project: './tsconfig.json'
   }

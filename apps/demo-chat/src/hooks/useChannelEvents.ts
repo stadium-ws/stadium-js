@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import stadium from '@/utils/stadium'
-import { Event } from '@stadium/core'
+import { Event } from '@stadium-ws/core'
 import { useSession } from '@/contexts/SessionContext'
 
 interface UseChannelEventsState {

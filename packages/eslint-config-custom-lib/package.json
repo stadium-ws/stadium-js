@@ -1,5 +1,5 @@
 {
-  "name": "@stadium/eslint-config-custom-lib",
+  "name": "@stadium-ws/eslint-config-custom-lib",
   "version": "0.0.0",
   "private": true,
   "license": "UNLICENSED",

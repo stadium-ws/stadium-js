@@ -1,5 +1,5 @@
 {
-  "extends": "@stadium/tsconfig/nextjs.json",
+  "extends": "@stadium-ws/tsconfig/nextjs.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",

@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ["@stadium/custom-lib"],
+  extends: ["@stadium-ws/custom-lib"],
   parserOptions: {
     project: './tsconfig.json'
   }

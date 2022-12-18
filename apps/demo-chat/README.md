@@ -1,4 +1,4 @@
-# `@stadium/demo-chat`
+# `@stadium-ws/demo-chat`
 
 ### TODO
 

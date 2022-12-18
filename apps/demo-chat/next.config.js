@@ -3,7 +3,7 @@ const withTM = require('next-transpile-modules')
 
 const plugins = [
   withTM([
-    '@stadium/core'
+    '@stadium-ws/core'
   ])
 ]
 

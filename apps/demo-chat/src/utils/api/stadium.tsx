@@ -1,4 +1,4 @@
-import { Stadium } from '@stadium/core'
+import { Stadium } from '@stadium-ws/core'
 
 const stadium = new Stadium({
   clientId: '8Ax8/A34SJmycSLBAi8xFlTRT0BR8YJi6oBLr8qEvPc=',

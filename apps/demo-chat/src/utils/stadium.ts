@@ -1,4 +1,4 @@
-import { Stadium } from '@stadium/core'
+import { Stadium } from '@stadium-ws/core'
 
 const stadium = new Stadium()
 
