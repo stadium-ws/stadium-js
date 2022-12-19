@@ -27,14 +27,15 @@ import type {
   CreateEvent,
   QueryGetChannelEvents,
   ReplyGetChannelEvents,
-  UpdateUser
-  , ReplyGetUserRoles, ReplyGetUsers
-  , QueryGetUserRoles, QueryGetUsers, QueryGetChannels
+  UpdateUser,
+  ReplyGetUserRoles,
+  ReplyGetUsers,
+  QueryGetUserRoles,
+  QueryGetUsers,
+  QueryGetChannels
 } from './types'
 import type { EventName } from './utils'
 import { getEventName } from './utils'
-
-const IS_BROWSER = !!global.window
 
 interface IStadiumConfig {
   clientId?: string
@@ -53,15 +54,6 @@ export class Stadium {
   private emitter?: EventEmitter
 
   constructor (config: IStadiumConfig = {}) {
-    if (process.env.NODE_ENV === 'development') {
-      if (IS_BROWSER) {
-        if (config.clientId || config.clientSecret) {
-          // eslint-disable-next-line no-console
-          console.warn('Stadium: You are using the browser version of Stadium. You don\'t need to provide a clientId or clientSecret.')
-        }
-      }
-    }
-
     this.apiUrl = config.apiUrl || 'https://api.stadium.ws'
     this.gatewayUrl = config.gatewayUrl || 'wss://gateway.stadium.ws'
     this.config = config
@@ -167,10 +159,10 @@ export class Stadium {
     await this.ensureAccessToken()
 
     const query: QueryGetChannelEvents = {
-      from: options.from,
-      limit: options.limit,
-      direction: options.direction,
-      type: options.type
+      from: options?.from,
+      limit: options?.limit,
+      direction: options?.direction,
+      type: options?.type
     }
 
     return this.requester.request({
@@ -183,9 +175,9 @@ export class Stadium {
     await this.ensureAccessToken()
 
     const query: QueryGetUserRoles = {
-      from: options.from,
-      limit: options.limit,
-      direction: options.direction
+      from: options?.from,
+      limit: options?.limit,
+      direction: options?.direction
     }
 
     return this.requester.request({
@@ -198,9 +190,9 @@ export class Stadium {
     await this.ensureAccessToken()
 
     const query: QueryGetUserRoles = {
-      from: options.from,
-      limit: options.limit,
-      direction: options.direction
+      from: options?.from,
+      limit: options?.limit,
+      direction: options?.direction
     }
 
     return this.requester.request({
@@ -213,9 +205,9 @@ export class Stadium {
     await this.ensureAccessToken()
 
     const query: QueryGetChannels = {
-      from: options.from,
-      limit: options.limit,
-      direction: options.direction
+      from: options?.from,
+      limit: options?.limit,
+      direction: options?.direction
     }
 
     return this.requester.request({

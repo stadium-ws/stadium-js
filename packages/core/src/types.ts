@@ -94,8 +94,8 @@ export enum SortDirection {
 
 export interface CursorPagination {
   from?: number
-  limit: number
-  direction: SortDirection
+  limit?: number
+  direction?: SortDirection
 }
 
 export interface QueryGetChannelEvents extends CursorPagination {
