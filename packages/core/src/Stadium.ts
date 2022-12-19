@@ -29,6 +29,7 @@ import type {
   ReplyGetChannelEvents,
   UpdateUser
   , ReplyGetUserRoles, ReplyGetUsers
+  , QueryGetUserRoles, QueryGetUsers, QueryGetChannels
 } from './types'
 import type { EventName } from './utils'
 import { getEventName } from './utils'
@@ -136,14 +137,6 @@ export class Stadium {
     return res.user
   }
 
-  public async getChannels (): Promise<ReplyGetChannels> {
-    await this.ensureAccessToken()
-
-    return this.requester.request({
-      urlSegment: 'channels'
-    })
-  }
-
   public async getChannel (channelId: string): Promise<Channel> {
     await this.ensureAccessToken()
 
@@ -174,31 +167,60 @@ export class Stadium {
     await this.ensureAccessToken()
 
     const query: QueryGetChannelEvents = {
-      cursor: options.cursor,
+      from: options.from,
       limit: options.limit,
-      sort: options.sort,
+      direction: options.direction,
       type: options.type
     }
 
     return this.requester.request({
       urlSegment: `channels/${channelId}/events`,
-      query: query
+      query
     })
   }
 
-  public async getUserRoles (): Promise<ReplyGetUserRoles> {
+  public async getUserRoles (options: QueryGetUserRoles): Promise<ReplyGetUserRoles> {
     await this.ensureAccessToken()
 
+    const query: QueryGetUserRoles = {
+      from: options.from,
+      limit: options.limit,
+      direction: options.direction
+    }
+
     return this.requester.request({
-      urlSegment: 'user-roles'
+      urlSegment: 'user-roles',
+      query
     })
   }
 
-  public async getUsers (): Promise<ReplyGetUsers> {
+  public async getUsers (options: QueryGetUsers): Promise<ReplyGetUsers> {
     await this.ensureAccessToken()
 
+    const query: QueryGetUserRoles = {
+      from: options.from,
+      limit: options.limit,
+      direction: options.direction
+    }
+
     return this.requester.request({
-      urlSegment: 'users'
+      urlSegment: 'users',
+      query
+    })
+  }
+
+  public async getChannels (options: QueryGetChannels): Promise<ReplyGetChannels> {
+    await this.ensureAccessToken()
+
+    const query: QueryGetChannels = {
+      from: options.from,
+      limit: options.limit,
+      direction: options.direction
+    }
+
+    return this.requester.request({
+      urlSegment: 'channels',
+      query
     })
   }
 

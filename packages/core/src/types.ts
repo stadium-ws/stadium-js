@@ -75,16 +75,16 @@ export interface Channel {
   type: ChannelType
   meta: any
   onlineUserCount: number
-  totalUserCount: number
+  userCount: number
+  eventCount: number
   appId: string
   creator: ChannelUser
   createdAt: string
   updatedAt: string
 }
 
-export interface PagePagination {
-  total: number
-  lastPage: number
+export interface Pagination {
+  next?: number
 }
 
 export enum SortDirection {
@@ -93,11 +93,9 @@ export enum SortDirection {
 }
 
 export interface CursorPagination {
-  cursor?: string
+  from?: number
   limit: number
-  sort?: {
-    [key: string]: SortDirection
-  }
+  direction: SortDirection
 }
 
 export interface QueryGetChannelEvents extends CursorPagination {
@@ -106,27 +104,33 @@ export interface QueryGetChannelEvents extends CursorPagination {
 
 export interface ReplyGetChannelEvents {
   events: Event[]
-  cursor: string
+  pagination: Pagination
 }
+
+export interface QueryGetUserRoles extends CursorPagination {}
 
 export interface ReplyGetUserRoles {
   userRoles: UserRole[]
-  meta: PagePagination
+  pagination: Pagination
 }
+
+export interface QueryGetUsers extends CursorPagination {}
 
 export interface ReplyGetUsers {
   users: User[]
-  meta: PagePagination
+  pagination: Pagination
 }
+
+export interface QueryGetChannels extends CursorPagination {}
 
 export interface ReplyGetChannels {
   channels: Channel[]
-  meta: PagePagination
+  pagination: Pagination
 }
 
 export interface ReplyGetChannelUsers {
   users: ChannelUser[]
-  meta: PagePagination
+  pagination: Pagination
 }
 
 export interface CreateEvent {
