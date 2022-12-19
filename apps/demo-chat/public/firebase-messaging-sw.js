@@ -1,5 +1,7 @@
-importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js')
-importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js')
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js')
+importScripts(
+  'https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js'
+)
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDfiTDalAYUF5fjAFKjHtwOUJKIfqcydQA',
@@ -10,7 +12,13 @@ const firebaseConfig = {
   appId: '1:192309278182:web:e1d28964dc929cf0a99227'
 }
 
+// eslint-disable-next-line no-console
+console.log('init firebase')
+
 firebase.initializeApp(firebaseConfig)
+
+// eslint-disable-next-line no-console
+console.log('firebase initialized')
 
 // Retrieve firebase messaging
 const messaging = firebase.messaging()
@@ -20,6 +28,21 @@ messaging.onBackgroundMessage(function(payload) {
   const notificationOptions = {
     body: payload.notification.body
   }
+
+  // eslint-disable-next-line no-console
+  console.log('onBackgroundMessage', payload)
+
+  self.registration.showNotification(notificationTitle, notificationOptions)
+})
+
+messaging.onMessage(function(payload) {
+  const notificationTitle = payload.notification.title
+  const notificationOptions = {
+    body: payload.notification.body
+  }
+
+  // eslint-disable-next-line no-console
+  console.log('onMessage', payload)
 
   self.registration.showNotification(notificationTitle, notificationOptions)
 })
