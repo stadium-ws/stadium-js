@@ -16,30 +16,15 @@ export type DefaultHeaders = {
   'Authorization'?: string
 }
 
-class ApiRequestError extends Error {
-  readonly statusCode: number
-
-  constructor (
-    message: string,
-    statusCode: number
-  ) {
-    super(message)
-    this.statusCode = statusCode
-    Error.captureStackTrace(this, this.constructor)
-  }
-}
-
 class Requester {
   private readonly baseUrl: string
-  private readonly successStatuses: number[] = [200, 201]
   private headers: DefaultHeaders = {
     'Content-Type': 'application/json',
     Accept: 'application/json'
   }
 
-  constructor (baseUrl: string, successStatuses: number[] = [200, 201]) {
+  constructor (baseUrl: string) {
     this.baseUrl = baseUrl
-    this.successStatuses = successStatuses
   }
 
   public setTokenHeader = (token: string) => {
@@ -65,18 +50,16 @@ class Requester {
       headers: this.headers
     })
 
-    if (!this.successStatuses.includes(fetchRes.status)) {
-      const text = await fetchRes.text()
-      throw new ApiRequestError(text, fetchRes.status)
+    if (!fetchRes.ok) {
+      return Promise.reject(fetchRes)
     }
 
-    if (fetchRes.status === 201) {
-      return {} as Reply
+    if (fetchRes.status === 200) {
+      const json = await fetchRes.json()
+      return json as Reply
     }
 
-    const json = await fetchRes.json()
-
-    return json as Reply
+    return {} as Reply
   }
 }
 
