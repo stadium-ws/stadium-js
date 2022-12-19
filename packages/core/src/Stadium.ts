@@ -269,6 +269,18 @@ export class Stadium {
     })
   }
 
+  public registerDevice = async (token: string): Promise<void> => {
+    await this.ensureAccessToken()
+
+    return this.requester.request({
+      urlSegment: 'devices',
+      method: 'POST',
+      body: {
+        token
+      }
+    })
+  }
+
   private onEvent = (event: SocketMessage) => {
     const eventName = getEventName(event.type)
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import stadium from '@/utils/stadium'
 import { Event } from '@stadium-ws/core'
 import { useSession } from '@/contexts/SessionContext'
+import { getFirebaseToken } from '@/utils/firebase'
 
 interface UseChannelEventsState {
   loading: boolean
@@ -57,6 +58,14 @@ const useChannelEvents = ({
           })
         })
 
+        const token = await getFirebaseToken()
+
+        if (!token) {
+          throw new Error('Could not get Firebase token')
+        }
+
+        await stadium.registerDevice(token)
+
         await stadium.updateUser(user!.id, {
           isOnline: true
         })
@@ -74,6 +83,9 @@ const useChannelEvents = ({
           next: res.pagination.next
         }))
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
+
         setState(prevState => ({
           ...prevState,
           loading: false,
