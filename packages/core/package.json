@@ -1,6 +1,6 @@
 {
   "name": "@stadium-ws/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Build scalable realtime applications.",
   "private": false,
   "repository": {
