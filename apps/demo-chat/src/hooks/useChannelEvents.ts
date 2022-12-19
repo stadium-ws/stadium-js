@@ -7,20 +7,20 @@ interface UseChannelEventsState {
   loading: boolean
   events: Event[]
   error: any
-  nextCursor?: string
+  next?: number
 }
 
 interface UseChannelEvents {
   channelId: string
   limit?: number
-  cursor?: string
+  from?: number
   type?: number
 }
 
 const useChannelEvents = ({
   channelId,
   limit = 20,
-  cursor,
+  from,
   type
 }: UseChannelEvents) => {
   const { user } = useSession()
@@ -28,7 +28,7 @@ const useChannelEvents = ({
     loading: false,
     events: [],
     error: undefined,
-    nextCursor: undefined
+    next: undefined
   })
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const useChannelEvents = ({
         })
 
         const res = await stadium.getChannelEvents(channelId, {
-          cursor,
+          from,
           limit,
           type
         })
@@ -71,7 +71,7 @@ const useChannelEvents = ({
           ...prevState,
           loading: false,
           events: res.events.reverse(),
-          nextCursor: res.cursor
+          next: res.pagination.next
         }))
       } catch (e) {
         setState(prevState => ({

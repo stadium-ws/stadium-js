@@ -155,7 +155,7 @@ export class Stadium {
     })
   }
 
-  public async getChannelEvents (channelId: string, options: QueryGetChannelEvents): Promise<ReplyGetChannelEvents> {
+  public async getChannelEvents (channelId: string, options?: QueryGetChannelEvents): Promise<ReplyGetChannelEvents> {
     await this.ensureAccessToken()
 
     const query: QueryGetChannelEvents = {
@@ -171,7 +171,7 @@ export class Stadium {
     })
   }
 
-  public async getUserRoles (options: QueryGetUserRoles): Promise<ReplyGetUserRoles> {
+  public async getUserRoles (options?: QueryGetUserRoles): Promise<ReplyGetUserRoles> {
     await this.ensureAccessToken()
 
     const query: QueryGetUserRoles = {
@@ -186,7 +186,7 @@ export class Stadium {
     })
   }
 
-  public async getUsers (options: QueryGetUsers): Promise<ReplyGetUsers> {
+  public async getUsers (options?: QueryGetUsers): Promise<ReplyGetUsers> {
     await this.ensureAccessToken()
 
     const query: QueryGetUserRoles = {
@@ -201,7 +201,7 @@ export class Stadium {
     })
   }
 
-  public async getChannels (options: QueryGetChannels): Promise<ReplyGetChannels> {
+  public async getChannels (options?: QueryGetChannels): Promise<ReplyGetChannels> {
     await this.ensureAccessToken()
 
     const query: QueryGetChannels = {
